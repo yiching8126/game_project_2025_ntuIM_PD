@@ -24,6 +24,7 @@ const float Task_coef = 0.5;
 //added force input integer, error handling
 //fixed indexing in witches abilities
 //fixed, using skills on dead people.
+//I want to add task conduct to character, and make it polymorph to others // but I might not.
 
 //features: 
 //error handling, polymorphism, 
