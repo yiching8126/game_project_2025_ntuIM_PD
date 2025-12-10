@@ -19,12 +19,12 @@ const float Task_coef = 0.5;
 
 
 //added reveeal all roles for debygging
-//known issue, if we input character at integer plae, it goes infinite loop
+//known issue, if we input character at integer plac, it goes infinite loop // fixed
 
 //added force input integer, error handling
 //fixed indexing in witches abilities
 //fixed, using skills on dead people.
-//I want to add task conduct to character, and make it polymorph to others // but I might not.
+//I want to add task conduct to character, and make it polymorph to others // but I might end up not doing that
 
 //features: 
 //error handling, polymorphism, 
@@ -89,7 +89,7 @@ int force_input_integer(int min = -1, int max = 8, int exclude = -999999) {
             return res;
 
         } catch (const std::invalid_argument &e) {
-            std::cerr << "錯誤：給我重新輸入整數阿阿阿阿 (" << e.what() << ")" << std::endl;
+            std::cerr << "錯誤：請重新輸入一個整數 (" << e.what() << ")" << std::endl;
             // Loop again
         } catch (const std::out_of_range &e) {
             // Handle numbers that are too large or too small for 'int'
@@ -246,6 +246,7 @@ void useAbility1(Character* playerList[]) override {
    killIndex = force_input_integer(1, 8);
    while(playerList[killIndex - 1]->alive == false){
     cout << "他已經，死了；目標換人";
+    killIndex = force_input_integer(1, 8);
     
    }
    
@@ -472,7 +473,7 @@ int checkWinCondition() {
    // -----------------------------
    //   好人勝利條件
    // -----------------------------
-   if (aliveWolves == 0 || task >= 200) {
+   if (aliveWolves == 0 || task >= 100) {
        cout << "好人勝利！\n";
        return 1;
    }
@@ -607,7 +608,7 @@ void dayPhase()
     {
         // 直接淘汰
         int killIndex = tiedPlayers[0];
-        playerList[killIndex - 1]->killed();
+        playerList[killIndex]->killed();
         cout << "\n====== 玩家 " << playerList[killIndex - 1]->name 
              << " 以 " << highestVote << " 票遭淘汰！ ======\n";
         return;
@@ -1073,9 +1074,9 @@ void nightPhase() {
                    cout << "女巫 " << witch->name << " 請輸入要毒殺的人 (index 1-8): ";
                    killIndex = force_input_integer(1, 8);
                    
-                   playerList[killIndex + 1]->killed();
+                   playerList[killIndex -1]->killed();
                    witch->hasAbility2 = false;
-                   deaths.push_back(playerList[killIndex + 1]->name);
+                   deaths.push_back(playerList[killIndex - 1]->name);
                    //witch->useAbility1(playerList); // 執行毒藥
                    // 注意：使用毒藥後 witch->hasAbility2 = false 已在 useAbility1 裡面處理
 
